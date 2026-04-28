@@ -95,14 +95,20 @@ def calcular_partidas(jogadores, partidas):
 
 def input_dados():
     partidas = []
-    wo = ""
     while True:
+        wo = ""
+
         jogador1 = input("Digite o nome do jogador de brancas (ou tecle 'X' para sair): ").lower()
         if jogador1 == "x":
             break
 
         jogador2 = input("Digite o nome do jogador de pretas: ").lower()
+        
         resultado = input("Resultado (w para brancas, b para pretas, d para empate): ").lower()
+
+        while resultado not in ("w", "b", "d"):
+            resultado = input("Resultado inválido. Digite w, b ou d: ").lower()
+
         if resultado == "w" or resultado == "b":
             wo = input("Foi WO? (S para sim, N para não): ").lower()
 
@@ -117,23 +123,27 @@ def input_dados():
 
 
 def saida_dados(jogadores):
-    print("\nClassificação Final:")
-    print("\n--------------------")
+    print(f"\n{"CLASSIFICAÇÃO FINAL":^40}")   
+    print("-" * 40)
     posicao = 1
     for jogador in jogadores:
-        print(
-            f"{posicao}º - {jogador['nome'].upper()} - {jogador['pontos']} pontos, {jogador['vitorias']} vitórias")
+        print(f"{posicao}º - {jogador['nome'].upper()} - {jogador['pontos']} pontos, {jogador['vitorias']} vitórias")
+        print("-" * 40)
         posicao += 1
 
 
 def dados_do_sistema():
-    jogadores = [
-        {"nome": "GABRIEL"},
-        {"nome": "PEDRO"},
-        {"nome": "JOAO"},
-        {"nome": "ANA"},
-        {"nome": "MARIA"},
+    numero_do_jogador = 1
+    while True:
+        jogadores = [
+            {"nome": str(input(f"Digite o nome do {numero_do_jogador}º jogador(a): "))},
     ]
+        numero_do_jogador += 1
+        
+        continuar = str(input("Deseja inserir mais um jogador(a)? [S / N]\nR:")).lower()
+        if continuar == "n":
+            break
+
     for jogador in jogadores:
         jogador["nome"] = jogador["nome"].lower()
         jogador["pontos"] = 0
